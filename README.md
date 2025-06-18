@@ -8,7 +8,7 @@
 
 ## 安装
 
-**项目仅支持 Python3.8+**
+**项目仅支持 Python3.7+**
 
 如果你不需要源码，只需要通过 `pip `快速安装
 
@@ -48,34 +48,34 @@ pip install -e .
 pip install --upgrade xfyunsdkspark
 ```
 
-[1、智能PPT(新)-API](https://github.com/iFLYTEK-OP/websdk-java/blob/master/doc/spark/aipptv2.md)
-
-[2、超拟人合成-API](https://github.com/iFLYTEK-OP/websdk-java/blob/master/doc/spark/oralapi.md)
-
-[3、简历生成-API](https://github.com/iFLYTEK-OP/websdk-java/blob/master/doc/spark/resumegenapi.md)
-
-[4、大模型语音听写-API](https://github.com/iFLYTEK-OP/websdk-java/blob/master/doc/spark/sparkiatapi.md)
-
-[5、一句话复刻-API](https://github.com/iFLYTEK-OP/websdk-java/blob/master/doc/spark/voiceclone.md)
+文档地址:   [SPARK-API](https://github.com/iFLYTEK-OP/websdk-python/blob/master/websdk-python-spark/README.md)
 
 ## 语音相关能力
 ```xml
 pip install --upgrade xfyunsdkspeech
 ```
-以下为项目地址
+文档地址:   [SPEECH-API](https://github.com/iFLYTEK-OP/websdk-python/blob/master/websdk-python-speech/README.md)
 
-[1、非实时语音转写文档](https://github.com/iFLYTEK-OP/websdk-java-speech/blob/master/doc/speech/LFASR.md)
+## 面部识别相关能力
 
-[2、实时语音转写文档](https://github.com/iFLYTEK-OP/websdk-java-speech/blob/master/doc/speech/RTASR.md)
+```xml
+pip install --upgrade xfyunsdkface
+```
 
-[3、在线语音合成文档](https://github.com/iFLYTEK-OP/websdk-java-speech/blob/master/doc/speech/TTS.md)
+文档地址:   [FACE-API](https://github.com/iFLYTEK-OP/websdk-python/blob/master/websdk-python-face/README.md)
 
-[4、语音听写文档](https://github.com/iFLYTEK-OP/websdk-java-speech/blob/master/doc/speech/IAT.md)
+## 自然语言相关能力
 
-[5、语音评测文档](https://github.com/iFLYTEK-OP/websdk-java-speech/blob/master/doc/speech/ISE.md)
+```xml
+pip install --upgrade xfyunsdknlp
+```
 
-[6、语音评测（普通版）](https://github.com/iFLYTEK-OP/websdk-java-speech/blob/master/doc/speech/ISE_HTTP.md)
+文档地址:   [NLP-API](https://github.com/iFLYTEK-OP/websdk-python/blob/master/websdk-python-nlp/README.md)
 
-[7、性别年龄识别](https://github.com/iFLYTEK-OP/websdk-java-speech/blob/master/doc/speech/IGR.md)
+## OCR相关能力
 
-[8、歌曲识别](https://github.com/iFLYTEK-OP/websdk-java-speech/blob/master/doc/speech/QBH.md)
+```xml
+pip install --upgrade xfyunsdkocr
+```
+
+文档地址:   [OCR-API](https://github.com/iFLYTEK-OP/websdk-python/blob/master/websdk-python-ocr/README.md)
