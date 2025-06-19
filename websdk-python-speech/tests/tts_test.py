@@ -54,7 +54,7 @@ def stream():
         audio_bytes = bytearray()
 
         # 流式生成音频
-        text = "全民制作人大家好，我是练习时长两年半的个人练习生蔡徐坤。喜欢唱、跳、rap、篮球"
+        text = "语音合成流式接口将文字信息转化为声音信息"
         logger.info(f"开始流式生成音频，文本长度: {len(text)}")
 
         for chunk in client.stream(text):

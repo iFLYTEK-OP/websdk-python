@@ -82,6 +82,14 @@ class _RtasrClient:
                         break
                     ws.send(data)
                     time.sleep(WAIT_MILLIS / 1000.0)
+            except IOError as e:
+                # 捕捉 PyAudio 中 stream 被关闭时的典型异常
+                if "Input overflowed" in str(e) or "Stream closed" in str(e):
+                    logger.warning(f"Stream read failed (possibly closed): {e}")
+                else:
+                    # 如果是其他IO错误，继续抛出
+                    logger.error(f"Error during audio send: {e}")
+                    self.queue.put({"error": f"Failed to send audio: {e}", "error_code": -1})
             except Exception as e:
                 logger.error(f"An error occurred: {e}")
                 self.queue.put({"error": f"Failed to send initial message: {str(e)}", "error_code": -1})
@@ -91,7 +99,6 @@ class _RtasrClient:
                 if hasattr(stream, 'close'):
                     stream.close()
                 ws.send(bytes(SEND_END.encode('utf-8')))
-                ws.close()
 
         thread = threading.Thread(target=run, args=(ws.param,))
         thread.start()

@@ -35,7 +35,7 @@ def param_check(param, file):
 
 
 class LFasrClient(HttpClient):
-    """Client for Long Form ASR"""
+    """Client for 录音文件转写 Long Form ASR"""
 
     def __init__(self, app_id: Optional[str] = None,
                  secret_key: Optional[str] = None,

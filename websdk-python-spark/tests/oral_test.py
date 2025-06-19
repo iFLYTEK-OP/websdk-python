@@ -1,5 +1,5 @@
 """
-TTS Client Usage Example
+Oral Client Usage Example
 """
 import os
 import base64

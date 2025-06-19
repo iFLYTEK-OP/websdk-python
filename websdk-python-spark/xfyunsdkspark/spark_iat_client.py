@@ -147,6 +147,14 @@ class _SparkIatClient:
                         break
                     time.sleep(WAIT_MILLIS / 1000.0)
                     seq += 1
+            except IOError as e:
+                # 捕捉 PyAudio 中 stream 被关闭时的典型异常
+                if "Input overflowed" in str(e) or "Stream closed" in str(e):
+                    logger.warning(f"Stream read failed (possibly closed): {e}")
+                else:
+                    # 如果是其他IO错误，继续抛出
+                    logger.error(f"Error during audio send: {e}")
+                    self.queue.put({"error": f"Failed to send audio: {e}", "error_code": -1})
             except Exception as e:
                 logger.error(f"An error occurred: {e}")
                 self.queue.put({"error": f"Failed to send initial message: {str(e)}", "error_code": -1})

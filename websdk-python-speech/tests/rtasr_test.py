@@ -26,7 +26,7 @@ def stream():
             api_key=os.getenv('API_KEY'),  # 替换为你的API密钥
         )
 
-        file_path = "D:\\iflytek\\project\\cloudPlatform\\demo\\websdk-java-demo\\src\main\\resources\\audio\\rtasr.pcm"
+        file_path = os.path.join(os.path.dirname(__file__), 'resources/rtasr', 'rtasr.pcm')
         f = open(file_path, 'rb')
 
         for chunk in client.stream(f):

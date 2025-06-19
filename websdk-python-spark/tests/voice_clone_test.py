@@ -61,7 +61,7 @@ def generate():
         )
 
         # 生成音频
-        text = "全民制作人大家好，我是练习时长两年半的个人练习生蔡徐坤。喜欢唱、跳、rap、篮球"
+        text = "一句话复刻可以通过声纹训练合成对应的音频信息"
         logger.info(f"开始生成音频，文本长度: {len(text)}")
 
         result = client.generate(text)

@@ -7,7 +7,7 @@ from xfyunsdkcore.errors import QbhError
 
 
 class QbhClient(HttpClient):
-    """Client for Qbh"""
+    """Client for 歌曲识别 Qbh"""
 
     def __init__(self, app_id: Optional[str] = None,
                  secret_key: Optional[str] = None,
