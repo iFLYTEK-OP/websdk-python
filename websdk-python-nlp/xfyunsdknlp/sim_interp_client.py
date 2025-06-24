@@ -133,7 +133,6 @@ class _SimInterpClient:
                     stream.stop_stream()
                 if hasattr(stream, 'close'):
                     stream.close()
-                ws.close()
 
         thread = threading.Thread(target=run, args=(ws.param, ws.stream, ws.frame_size))
         thread.start()
