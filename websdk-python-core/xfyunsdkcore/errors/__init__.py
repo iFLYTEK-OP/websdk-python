@@ -65,14 +65,14 @@ class IgrError(Exception):
         logger.error(f"IgrError occurred: {message} (Error Code: {error_code})")
 
 
-class TTSError(Exception):
+class TtsError(Exception):
     """Custom exception for TTS related errors"""
 
     def __init__(self, message: str, error_code: int = -1):
         self.message = message
         self.error_code = error_code
-        super().__init__(f"TTSError: {message} (Error Code: {error_code})")
-        logger.error(f"TTSError occurred: {message} (Error Code: {error_code})")
+        super().__init__(f"TtsError: {message} (Error Code: {error_code})")
+        logger.error(f"TtsError occurred: {message} (Error Code: {error_code})")
 
 
 class LFasrError(Exception):
@@ -373,6 +373,36 @@ class WatermarkVerificationError(Exception):
         self.error_code = error_code
         super().__init__(f"WatermarkVerificationError: {message} (Error Code: {error_code})")
         logger.error(f"WatermarkVerificationError occurred: {message} (Error Code: {error_code})")
+
+
+class AgentClientError(Exception):
+    """Custom exception for Spark Agent related errors"""
+
+    def __init__(self, message: str, error_code: int = -1):
+        self.message = message
+        self.error_code = error_code
+        super().__init__(f"AgentClientError: {message} (Error Code: {error_code})")
+        logger.error(f"AgentClientError occurred: {message} (Error Code: {error_code})")
+
+
+class OralChatClientError(Exception):
+    """Custom exception for Oral Chat related errors"""
+
+    def __init__(self, message: str, error_code: int = -1):
+        self.message = message
+        self.error_code = error_code
+        super().__init__(f"OralChatClientError: {message} (Error Code: {error_code})")
+        logger.error(f"OralChatClientError occurred: {message} (Error Code: {error_code})")
+
+
+class LlmOcrError(Exception):
+    """Custom exception for LLM OCR client related errors"""
+
+    def __init__(self, message: str, error_code: int = -1):
+        self.message = message
+        self.error_code = error_code
+        super().__init__(f"LlmOcrError: {message} (Error Code: {error_code})")
+        logger.error(f"LlmOcrError occurred: {message} (Error Code: {error_code})")
 
 
 class SignatureError(Exception):

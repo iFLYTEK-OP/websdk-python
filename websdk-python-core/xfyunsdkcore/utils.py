@@ -35,6 +35,33 @@ class JsonUtils:
         """Convert JSON string to object"""
         return json.loads(json_str)
 
+    @classmethod
+    def remove_none_values(cls, obj):
+        """
+        递归地移除对象中所有值为 None 的键值对。
+
+        Args:
+            obj: 可以是字典、列表、基本数据类型等。
+
+        Returns:
+            处理后的对象，其中所有层级的 None 值（作为字典的值）都已被移除。
+        """
+        if isinstance(obj, dict):
+            # 如果是字典，递归处理其每个值，并过滤掉值为 None 的项
+            return {
+                k: cls.remove_none_values(v)
+                for k, v in obj.items()
+                if v is not None  # 这里过滤掉值为 None 的键
+            }
+        elif isinstance(obj, list):
+            # 如果是列表，递归处理列表中的每个元素
+            return [cls.remove_none_values(item) for item in obj]
+        else:
+            # 对于其他类型（str, int, float, bool, 或者已经是 None 但作为列表元素等情况），直接返回
+            # 注意：这里不会移除列表中的 None 元素，只移除字典中 *作为值* 的 None。
+            # 如果你也想移除列表中的 None 元素，可以在列表推导式里加 `if item is not None`
+            return obj
+
 
 class CryptTools:
     """Encryption and decryption tools"""

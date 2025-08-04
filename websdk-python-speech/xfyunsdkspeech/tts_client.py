@@ -9,20 +9,20 @@ from typing import Any, Dict, Generator, AsyncGenerator, Optional
 from typing_extensions import Protocol
 from xfyunsdkcore.log.logger import logger
 from xfyunsdkcore.signature import Signature
-from xfyunsdkcore.errors import TTSError
+from xfyunsdkcore.errors import TtsError
 
 DEFAULT_API_URL = "wss://tts-api.xfyun.cn/v2/tts"
 DEFAULT_TIMEOUT = 30
 
 
-class TTSCallback(Protocol):
+class TtsCallback(Protocol):
     """TTS synthesis callback interface."""
     def chunk(self, audio_chunk: str, **kwargs: Any) -> None:
         """Called when an audio chunk is received."""
         ...
 
 
-class _TTSClient:
+class _TtsClient:
     """Low-level WebSocket client for TTS."""
     def __init__(self, app_id: str, api_key: str, api_secret: str, api_url: Optional[str] = None):
         self.api_url = api_url or DEFAULT_API_URL
@@ -31,7 +31,7 @@ class _TTSClient:
         self.api_secret = api_secret
         self.queue: Queue[Dict] = Queue()
         self.client = websocket
-        logger.info("TTSClient initialized")
+        logger.info("TtsClient initialized")
 
     def run(self, param: dict) -> None:
         """Run the WebSocket client synchronously."""
@@ -103,7 +103,7 @@ class _TTSClient:
                 logger.error(f"Response timeout after {timeout} seconds")
                 raise TimeoutError(f"TTSClient response timeout after {timeout} seconds.")
             if "error" in content:
-                raise TTSError(content["error"], content.get("error_code", -1))
+                raise TtsError(content["error"], content.get("error_code", -1))
             if "done" in content:
                 break
             yield content
@@ -118,14 +118,14 @@ class _TTSClient:
                 logger.error(f"Response timeout after {timeout} seconds")
                 raise TimeoutError(f"TTSClient response timeout after {timeout} seconds.")
             if "error" in content:
-                raise TTSError(content["error"], content.get("error_code", -1))
+                raise TtsError(content["error"], content.get("error_code", -1))
             if "done" in content:
                 break
             yield content
             self.queue.task_done()
 
 
-class TTSClient:
+class TtsClient:
     """High-level TTS client for Xunfei TTS API, supports streaming and callback."""
     def __init__(
             self,
@@ -146,7 +146,7 @@ class TTSClient:
             rdn: str = None,
             status: int = 2,
             request_timeout: int = DEFAULT_TIMEOUT,
-            callback: Optional[TTSCallback] = None):
+            callback: Optional[TtsCallback] = None):
         """
         初始化 TTSClient
         """
@@ -168,8 +168,8 @@ class TTSClient:
         self.status = status
         self.request_timeout = request_timeout
         self.callback = callback
-        self.client = _TTSClient(app_id, api_key, api_secret, host_url)
-        logger.info("TTSClient initialized with parameters")
+        self.client = _TtsClient(app_id, api_key, api_secret, host_url)
+        logger.info("TtsClient initialized with parameters")
 
     def _build_param(self, text: str) -> Dict[str, Any]:
         """Build request parameters for TTS API."""
@@ -198,7 +198,7 @@ class TTSClient:
             return param
         except Exception as e:
             logger.error(f"Failed to build parameters: {e}")
-            raise TTSError(f"Failed to build parameters: {e}")
+            raise TtsError(f"Failed to build parameters: {e}")
 
     def stream(self, text: str) -> Generator[Any, None, None]:
         """Synchronously stream audio chunks for the given text."""
@@ -212,7 +212,7 @@ class TTSClient:
                     yield content["data"]
         except Exception as e:
             logger.error(f"Failed to stream audio: {e}")
-            raise TTSError(f"Failed to stream audio: {e}")
+            raise TtsError(f"Failed to stream audio: {e}")
 
     async def astream(self, text: str) -> AsyncGenerator[Any, None]:
         """Asynchronously stream audio chunks for the given text."""
@@ -226,4 +226,4 @@ class TTSClient:
                     yield content["data"]
         except Exception as e:
             logger.error(f"Failed to stream audio: {e}")
-            raise TTSError(f"Failed to stream audio: {e}")
+            raise TtsError(f"Failed to stream audio: {e}")

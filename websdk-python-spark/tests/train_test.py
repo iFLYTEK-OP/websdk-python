@@ -69,11 +69,12 @@ def main():
         logger.info(f"任务提交结果: {submit_data}")
 
         # 5. 提交文件任务(不需要单独调用submit接口)
+        file_path = os.path.join(os.path.dirname(__file__), 'resources', 'train.mp3')
         local_audio_request = AudioAddRequest(
             taskId=task_id,
             textId=5001,
             textSegId=1,
-            files="D:\\iflytek\\project\\python\\websdk-python-cursor\\websdk-python-spark\\tests\\resources\\audio\\train.mp3"
+            files=file_path
         )
         submit_with_audio_response = client.submit_with_audio(local_audio_request)
         logger.info(f"Submit with audio response: {submit_with_audio_response}")
