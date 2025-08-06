@@ -1,6 +1,6 @@
 # xfyunsdkspark
 
-xfyunsdkspark是讯飞开放平台星火大模型相关 API的Python SDK，提供[智能PPT](https://www.xfyun.cn/doc/spark/PPTv2.html)、[超拟人合成](https://www.xfyun.cn/doc/spark/super%20smart-tts.html)、[简历生成](https://www.xfyun.cn/doc/spark/resume.html)、[大模型语音识别](https://www.xfyun.cn/doc/spark/spark_zh_iat.html)、[一句话复刻](https://www.xfyun.cn/doc/spark/reproduction.html#%E9%9F%B3%E9%A2%91%E5%90%88%E6%88%90%E6%8E%A5%E5%8F%A3)、[一句话训练](https://www.xfyun.cn/doc/spark/reproduction.html#%E9%9F%B3%E8%89%B2%E8%AE%AD%E7%BB%83%E6%8E%A5%E5%8F%A3)等功能的客户端实现。
+xfyunsdkspark是讯飞开放平台星火大模型相关 API的Python SDK，提供[智能PPT](https://www.xfyun.cn/doc/spark/PPTv2.html)、[超拟人合成](https://www.xfyun.cn/doc/spark/super%20smart-tts.html)、[简历生成](https://www.xfyun.cn/doc/spark/resume.html)、[大模型语音识别](https://www.xfyun.cn/doc/spark/spark_zh_iat.html)、[一句话复刻](https://www.xfyun.cn/doc/spark/reproduction.html#%E9%9F%B3%E9%A2%91%E5%90%88%E6%88%90%E6%8E%A5%E5%8F%A3)、[一句话训练](https://www.xfyun.cn/doc/spark/reproduction.html#%E9%9F%B3%E8%89%B2%E8%AE%AD%E7%BB%83%E6%8E%A5%E5%8F%A3)、[星火智能体](https://www.xfyun.cn/doc/spark/Agent04-API%E6%8E%A5%E5%85%A5.html#_2-%E5%B7%A5%E4%BD%9C%E6%B5%81-api-%E9%9B%86%E6%88%90)、[超拟人交互](https://www.xfyun.cn/doc/spark/sparkos_interactive.html)等功能的客户端实现。
 
  如需**大模型对话功能**以及**生态支持**详情等请访问[讯飞星火大模型接入库](https://github.com/iflytek/spark-ai-python)
 
@@ -11,6 +11,8 @@ xfyunsdkspark是讯飞开放平台星火大模型相关 API的Python SDK，提�
 - **简历生成**：根据用户提示生成简历
 - **大模型语音识别**：支持方言、普通话、多语种等大模型智能语音识别
 - **一句话复刻**：通过一句话训练复刻的用户声纹, 生成语音
+- **星火智能体：**通过工作流编排创建智能体，通过串联各个功能节点，实现对复杂业务流程的编排，一般适用于流程相对复杂或功能更为丰富的任务场景，如：AI 客服、行业资讯、绘本创作等
+- **超拟人交互：**和超拟人进行实时会话
 
 ## 安装方法
 
@@ -93,6 +95,14 @@ logger.info(f"音频总大小: {len(audio_bytes)} 字节")
 ### VoiceCloneClient
 
 上传文本通过训练出的音色资源进行合成 , **支持合成中、英、日、韩、俄五种语言**
+
+### AgentClient
+
+上提供与星火智能体API交互的功能，包括工作流执行、恢复和文件上传等操作
+
+### OralChatClient
+
+超拟人交互对话服务 , 提供全双工和单工模式
 
 
 ## 许可证

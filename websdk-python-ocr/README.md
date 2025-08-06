@@ -1,6 +1,6 @@
 # xfyunsdkocr
 
-xfyunsdkocr是讯飞开放平台图像识别相关API的Python SDK，提供[银行卡识别intsig](https://www.xfyun.cn/doc/words/bankCardRecg/API.html)、[名片识别intsig](https://www.xfyun.cn/doc/words/businessCardRecg/API.html)、[指尖文字识别](https://www.xfyun.cn/doc/words/finger-word-discern/API.html)、[印刷文字识别](https://www.xfyun.cn/doc/words/multi_print_recognition/API.html)、[手写文字识别](https://www.xfyun.cn/doc/words/wordRecg/API.html)、[营业执照识别intsig](https://www.xfyun.cn/doc/words/businessLicenseRecg/API.html)、[出租车发票识别](https://www.xfyun.cn/doc/words/taxi_ticket/newAPI.html)、[火车票识别](https://www.xfyun.cn/doc/words/train_ticket/API.html)、[增值税发票识别intsig](https://www.xfyun.cn/doc/words/VAT-invoice-recg/API.html)、[身份证识别intsig](https://www.xfyun.cn/doc/words/idCardRecg/API.html)、[印刷文字识别intsig](https://www.xfyun.cn/doc/words/printed-word-recognition/API.html)、[通用文字识别intsig](https://www.xfyun.cn/doc/words/universal-character-recognition/API.html)、[票据卡证识别](https://www.xfyun.cn/doc/words/TicketIdentification/API.html)、[公式识别](https://www.xfyun.cn/doc/words/formula-discern/API.html)、[拍照速算识别](https://www.xfyun.cn/doc/words/photo-calculate-recg/API.html)、[驾驶证识别](https://www.xfyun.cn/doc/words/DriversLicenseRecg/API.html)、[车牌识别](https://www.xfyun.cn/doc/words/vehicleLicensePlateRecg/API.html)、[行驶证识别](https://www.xfyun.cn/doc/words/vehicleRecg/API.html)、[图片还原文档](https://www.xfyun.cn/doc/words/picture-document-reconstruction/API.html)、[场景识别](https://www.xfyun.cn/doc/image/scene-recg/API.html)、[物体识别](https://www.xfyun.cn/doc/image/object-recg/API.html)、[场所识别](https://www.xfyun.cn/doc/image/place-recg/API.html)等功能的客户端实现。
+xfyunsdkocr是讯飞开放平台图像识别相关API的Python SDK，提供[银行卡识别intsig](https://www.xfyun.cn/doc/words/bankCardRecg/API.html)、[名片识别intsig](https://www.xfyun.cn/doc/words/businessCardRecg/API.html)、[指尖文字识别](https://www.xfyun.cn/doc/words/finger-word-discern/API.html)、[印刷文字识别](https://www.xfyun.cn/doc/words/multi_print_recognition/API.html)、[手写文字识别](https://www.xfyun.cn/doc/words/wordRecg/API.html)、[营业执照识别intsig](https://www.xfyun.cn/doc/words/businessLicenseRecg/API.html)、[出租车发票识别](https://www.xfyun.cn/doc/words/taxi_ticket/newAPI.html)、[火车票识别](https://www.xfyun.cn/doc/words/train_ticket/API.html)、[增值税发票识别intsig](https://www.xfyun.cn/doc/words/VAT-invoice-recg/API.html)、[身份证识别intsig](https://www.xfyun.cn/doc/words/idCardRecg/API.html)、[印刷文字识别intsig](https://www.xfyun.cn/doc/words/printed-word-recognition/API.html)、[通用文字识别intsig](https://www.xfyun.cn/doc/words/universal-character-recognition/API.html)、[票据卡证识别](https://www.xfyun.cn/doc/words/TicketIdentification/API.html)、[公式识别](https://www.xfyun.cn/doc/words/formula-discern/API.html)、[拍照速算识别](https://www.xfyun.cn/doc/words/photo-calculate-recg/API.html)、[驾驶证识别](https://www.xfyun.cn/doc/words/DriversLicenseRecg/API.html)、[车牌识别](https://www.xfyun.cn/doc/words/vehicleLicensePlateRecg/API.html)、[行驶证识别](https://www.xfyun.cn/doc/words/vehicleRecg/API.html)、[图片还原文档](https://www.xfyun.cn/doc/words/picture-document-reconstruction/API.html)、[场景识别](https://www.xfyun.cn/doc/image/scene-recg/API.html)、[物体识别](https://www.xfyun.cn/doc/image/object-recg/API.html)、[场所识别](https://www.xfyun.cn/doc/image/place-recg/API.html)、[大模型通用文档识别](https://www.xfyun.cn/doc/words/OCRforLLM/API.html)等功能的客户端实现。
 
 ## 功能特点
 
@@ -15,6 +15,7 @@ xfyunsdkocr是讯飞开放平台图像识别相关API的Python SDK，提供[银�
 - **车相关识别**：行驶证识别、驾驶证识别、车牌识别
 - **图片还原文档**：识别图片 , 还原成文档
 - **场地识别**：场景识别、物体识别、场所识别
+- **大模型通用文档识别：**大模型通用OCR服务
 
 ## 安装方法
 
@@ -99,6 +100,10 @@ from xfyunsdkocr.pd_rec_client import PDRecClient
 ### RecOCRClient
 
 场地识别, 见功能特点介绍
+
+### LlmOcrClient
+
+OCR大模型引擎是以讯飞星火大模型为底座研发的新一代OCR识别引擎支持公式、图表、栏目等复杂场景图像识别，具有功能全面、识别效果好、泛化能力
 
 
 ## 许可证

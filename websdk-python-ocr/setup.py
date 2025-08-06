@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="xfyunsdkocr",
-    version="0.1.0",
+    version="0.0.2",
     description="a sdk ocr for xfyun",
     author="zyding6",
     author_email="zyding6@iflytek.com",
@@ -11,7 +11,7 @@ setup(
     packages=find_packages(include=["xfyunsdkocr", "xfyunsdkocr.*"]),
     python_requires=">=3.7.1",
     install_requires=[
-        "xfyunsdkcore>=0.1.0",
+        "xfyunsdkcore>=0.0.2",
         "python-dotenv"
     ],
 )
