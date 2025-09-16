@@ -10,6 +10,7 @@ from typing_extensions import Protocol
 from xfyunsdkcore.log.logger import logger
 from xfyunsdkcore.signature import Signature
 from xfyunsdkcore.errors import TtsError
+from xfyunsdkcore.utils import JsonUtils
 
 DEFAULT_API_URL = "wss://tts-api.xfyun.cn/v2/tts"
 DEFAULT_TIMEOUT = 30
@@ -194,6 +195,7 @@ class TtsClient:
                 },
                 "data": {"status": self.status, "text": encoded_text}
             }
+            param = JsonUtils.remove_none_values(param)
             logger.debug(f"TTS Request Parameters: {param}")
             return param
         except Exception as e:

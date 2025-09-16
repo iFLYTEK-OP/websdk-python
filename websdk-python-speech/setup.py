@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="xfyunsdkspeech",
-    version="0.0.2",
+    version="0.0.3",
     description="a sdk speech for xfyun",
     author="zyding6",
     author_email="zyding6@iflytek.com",
