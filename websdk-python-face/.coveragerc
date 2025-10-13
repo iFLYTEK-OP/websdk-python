@@ -1,0 +1,42 @@
+[run]
+# 指定要测量覆盖率的源代码目录
+source = xfyunsdkface
+
+# 使用相对路径（重要：Codecov 需要相对路径）
+relative_files = True
+
+# 省略不需要测试的文件或目录
+omit = 
+    */tests/*
+    */test_*.py
+    */__pycache__/*
+    */site-packages/*
+    setup.py
+
+[report]
+# 报告中排除的行（如永远不会执行的代码）
+exclude_lines =
+    # 标准排除规则
+    pragma: no cover
+    def __repr__
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+    @abstractmethod
+    @abc.abstractmethod
+
+# 显示缺少覆盖的行号
+show_missing = True
+
+# 精度
+precision = 2
+
+[html]
+# HTML 报告输出目录
+directory = htmlcov
+
+[xml]
+# XML 报告输出文件
+output = coverage.xml
+
