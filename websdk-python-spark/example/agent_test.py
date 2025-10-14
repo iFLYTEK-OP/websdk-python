@@ -34,7 +34,7 @@ def generate():
             parameters={
                 "AGENT_USER_INPUT": "今天天气怎么样"
             },
-            stream=False
+            stream=True
         )
         if param.stream:
             finalResult = []

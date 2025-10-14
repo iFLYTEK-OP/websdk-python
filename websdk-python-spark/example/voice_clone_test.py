@@ -129,5 +129,5 @@ def stream():
 
 if __name__ == "__main__":
     # 可以选择运行非流式或流式生成
-    generate()  # 非流式生成
-    # stream()   # 流式生成
+    # generate()  # 非流式生成
+    stream()   # 流式生成

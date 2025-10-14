@@ -124,7 +124,20 @@ class _OralChatClient:
 
     def on_message(self, ws: websocket.WebSocketApp, message: bytes) -> None:
         """WebSocket 消息接收回调"""
-        self.queue.put({"data": message.decode(self.text_encoding)})
+        try:
+            data = json.loads(message.decode(self.text_encoding))
+            code = data["header"]["code"]
+            if code != 0:
+                error_msg = data['header'].get('message', 'Unknown error')
+                logger.error(f"API error: Code {code}, Message: {error_msg}")
+                self.queue.put({"error": f"Error Code: {code}, Message: {error_msg}", "error_code": code})
+                ws.close()
+                return
+            self.queue.put({"data": data})
+        except Exception as e:
+            logger.error(f"Failed to process message: {e}")
+            self.queue.put({"error": f"Failed to process message: {e}", "error_code": -1})
+            ws.close()
 
     def on_error(self, ws: websocket.WebSocketApp, error: Any) -> None:
         """WebSocket 错误回调"""
@@ -155,7 +168,7 @@ class _OralChatClient:
                 content = self.queue.get(timeout=timeout)
             except queue.Empty:
                 logger.error(f"Response timeout after {timeout} seconds")
-                raise TimeoutError(f"RtasrClient response timeout after {timeout} seconds.")
+                raise TimeoutError(f"OralChat response timeout after {timeout} seconds.")
             if "error" in content:
                 raise OralChatClientError(content["error"], content.get("error_code", -1))
             if "done" in content:
@@ -179,7 +192,7 @@ class _OralChatClient:
                 content = self.queue.get(timeout=timeout)
             except queue.Empty:
                 logger.warning(f"Response timeout after {timeout} seconds")
-                raise TimeoutError(f"RtasrClient response timeout after {timeout} seconds.")
+                raise TimeoutError(f"OralChat response timeout after {timeout} seconds.")
             if "error" in content:
                 raise OralChatClientError(content["error"], content.get("error_code", -1))
             if "done" in content:
@@ -211,13 +224,13 @@ class OralChatClient:
             text_compress: str = "raw",
             text_format: str = "json",
             frame_size: int = 0,
-            dwa: str = None,
+            dwa: str = "wpgs",
             eos: str = None,
             domain: str = None,
             host_url: str = DEFAULT_API_URL,
             request_timeout: int = DEFAULT_TIMEOUT,
             callback: Optional[OralChatCallback] = None):
-        """初始化 RtasrClient
+        """初始化 OralChat
 
         Args:
             app_id: 应用ID
@@ -266,7 +279,7 @@ class OralChatClient:
             client.arun(param)
             # 等待连接建立（可加超时控制）
             for _ in range(self.request_timeout):
-                if client.ws.connected:
+                if client.ws and client.ws.connected:
                     logger.info("OralClient Started...")
                     return client
                 time.sleep(1)
@@ -411,6 +424,15 @@ class OralChatClient:
     def _build_parameter(self, param: OralChatParam) -> dict:
         """构建Parameter"""
         return {
+            "iat": {
+                "iat": {
+                    "encoding": "utf8",
+                    "compress": "raw",
+                    "format": "json"
+                },
+                "vgap": self.vgap,
+                "dwa": self.dwa
+            },
             "nlp": {
                 "nlp": {
                     "encoding": self.text_encoding,

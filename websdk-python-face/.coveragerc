@@ -1,4 +1,7 @@
 [run]
+# 使用相对路径（重要：Codecov 需要相对路径）
+relative_files = True
+
 # 指定要测量覆盖率的源代码目录（相对于项目根目录）
 source = xfyunsdkface
 
