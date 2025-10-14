@@ -3,7 +3,7 @@
 relative_files = True
 
 # 源代码目录
-source = xfyunsdkocr
+source = xfyunsdknlp
 
 # 需要测量覆盖率的文件
 omit =
@@ -11,7 +11,10 @@ omit =
     */test_*.py
     */__pycache__/*
     */site-packages/*
-    setup.py
+    */setup.py
+    */example/*
+    */build/*
+    */dist/*
 
 # 分支覆盖率
 branch = True
@@ -48,7 +51,7 @@ exclude_lines =
 directory = htmlcov
 
 # 标题
-title = websdk-python-ocr Coverage Report
+title = websdk-python-nlp Coverage Report
 
 [xml]
 # XML 报告输出
@@ -56,6 +59,6 @@ output = coverage.xml
 
 [paths]
 source =
-    xfyunsdkocr/
-    */xfyunsdkocr/
+    xfyunsdknlp/
+    */xfyunsdknlp/
 
