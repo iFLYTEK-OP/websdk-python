@@ -1,9 +1,6 @@
 [run]
-# 指定要测量覆盖率的源代码目录
+# 指定要测量覆盖率的源代码目录（相对于项目根目录）
 source = xfyunsdkface
-
-# 使用相对路径（重要：Codecov 需要相对路径）
-relative_files = True
 
 # 省略不需要测试的文件或目录
 omit = 
@@ -11,7 +8,10 @@ omit =
     */test_*.py
     */__pycache__/*
     */site-packages/*
-    setup.py
+    */setup.py
+    */example/*
+    */build/*
+    */dist/*
 
 [report]
 # 报告中排除的行（如永远不会执行的代码）
@@ -39,4 +39,9 @@ directory = htmlcov
 [xml]
 # XML 报告输出文件
 output = coverage.xml
+
+[paths]
+source =
+    xfyunsdkface/
+    */xfyunsdkface/
 
