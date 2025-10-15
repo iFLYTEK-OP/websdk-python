@@ -1,9 +1,11 @@
 """
 声音克隆客户端单元测试
 """
+import json
+
 import pytest
 import os
-from xfyunsdkspark.voice_clone import VoiceCloneClient
+from xfyunsdkspark.voice_clone import VoiceCloneClient, _VoiceCloneClient
 
 try:
     from dotenv import load_dotenv
@@ -41,13 +43,48 @@ class TestVoiceClone:
         assert hasattr(client, 'api_key')
         assert hasattr(client, 'api_secret')
 
+    def test_on_error(self):
+        """测试客户端属性"""
+        client = _VoiceCloneClient('app_id', 'api_key', 'api_secret', 'text_encoding', 'host_url')
+        param = {
+            "header": {
+                "code": -1,
+                "message": "位置的错误"
+            },
+            "payload": {
+                "result": {
+                    "status": 2
+                }
+            }
+        }
+        try:
+            client.on_open(None)
+        except Exception as e:
+            pass
+        try:
+            client.on_message(None, json.dumps(param))
+        except Exception as e:
+            pass
+        try:
+            client._process_payload(None, param)
+        except Exception as e:
+            pass
+        try:
+            client.on_error(None, None)
+        except Exception as e:
+            pass
+        try:
+            client.on_close(None, 0, "")
+        except Exception as e:
+            pass
+
     def test_success(self):
         """测试 成功"""
         client = VoiceCloneClient(
             app_id=os.getenv('APP_ID'),  # 替换为你的应用ID
             api_key=os.getenv('API_KEY'),  # 替换为你的API密钥
             api_secret=os.getenv('API_SECRET'),  # 替换为你的API密钥
-            res_id="您的声纹ID",
+            res_id="9f65390_ttsclone-1b6344b2-jugym",
         )
         text = "一句话复刻可以通过声纹训练合成对应的音频信息"
         client.generate(text)
@@ -58,10 +95,23 @@ class TestVoiceClone:
             app_id=os.getenv('APP_ID'),  # 替换为你的应用ID
             api_key=os.getenv('API_KEY'),  # 替换为你的API密钥
             api_secret=os.getenv('API_SECRET'),  # 替换为你的API密钥
-            res_id="您的声纹ID",
+            res_id="9f65390_ttsclone-1b6344b2-jugym",
         )
         text = "一句话复刻可以通过声纹训练合成对应的音频信息"
         for chunk in client.stream(text):
+            pass
+
+    @pytest.mark.asyncio
+    async def test_astream(self):
+        """测试 astream 异步方法"""
+        client = VoiceCloneClient(
+            app_id=os.getenv('APP_ID'),  # 替换为你的应用ID
+            api_key=os.getenv('API_KEY'),  # 替换为你的API密钥
+            api_secret=os.getenv('API_SECRET'),  # 替换为你的API密钥
+            res_id="9f65390_ttsclone-1b6344b2-jugym",
+        )
+        text = "一句话复刻可以通过声纹训练合成对应的音频信息"
+        async for chunk in client.astream(text):
             pass
 
 

@@ -14,4 +14,11 @@ setup(
         "xfyunsdkcore>=0.0.2",
         "python-dotenv"
     ],
+    extras_require={
+        "test": [
+            "pytest>=6.0",
+            "pytest-asyncio>=0.21.0",
+            "pytest-cov"
+        ]
+    },
 )

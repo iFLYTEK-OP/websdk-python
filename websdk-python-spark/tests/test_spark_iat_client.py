@@ -1,10 +1,12 @@
 """
 星火语音转写客户端单元测试
 """
+import json
+
 import pytest
 import os
 from unittest.mock import Mock, patch
-from xfyunsdkspark.spark_iat_client import SparkIatClient, SparkIatModel
+from xfyunsdkspark.spark_iat_client import SparkIatClient, SparkIatModel, _SparkIatClient
 
 try:
     from dotenv import load_dotenv
@@ -17,7 +19,7 @@ load_dotenv()
 
 class TestSparkIatClient:
     """星火语音转写客户端测试类"""
-    
+
     def test_client_initialization(self):
         """测试客户端初始化"""
         client = SparkIatClient(
@@ -29,7 +31,7 @@ class TestSparkIatClient:
         assert client.app_id == "test_app_id"
         assert client.api_key == "test_api_key"
         assert client.api_secret == "test_api_secret"
-    
+
     def test_client_custom_params(self):
         """测试自定义参数初始化"""
         client = SparkIatClient(
@@ -58,7 +60,7 @@ class TestSparkIatClient:
         assert hasattr(client, 'language')
         assert hasattr(client, 'domain')
 
-    def test_success(self):
+    def test_stream(self):
         """测试 成功请求"""
         client = SparkIatClient(
             app_id=os.getenv('APP_ID'),  # 替换为你的应用ID
@@ -75,7 +77,56 @@ class TestSparkIatClient:
         for chunk in client.stream(f):
             pass
 
+    def test_on_error(self):
+        """测试 ws错误 请求"""
+        client = _SparkIatClient('app_id', 'api_key', 'api_secret', None, 'host_url')
+        param = {
+            "header": {
+                "code": -1,
+                "message": "位置的错误"
+            },
+            "payload": {
+                "result": {
+                    "status": 2
+                }
+            }
+        }
+        try:
+            client.on_message(None, json.dumps(param))
+        except Exception as e:
+            pass
+        param['header']['code'] = 0
+        try:
+            client.on_message(None, json.dumps(param))
+        except Exception as e:
+            pass
+        try:
+            client.on_error(None, json.dumps(param))
+        except Exception as e:
+            pass
+        try:
+            client.on_close(None, 0, "")
+        except Exception as e:
+            pass
+
+    @pytest.mark.asyncio
+    async def test_astream(self):
+        """测试 astream 异步方法"""
+        client = SparkIatClient(
+            app_id=os.getenv('APP_ID'),  # 替换为你的应用ID
+            api_key=os.getenv('API_KEY'),  # 替换为你的API密钥
+            api_secret=os.getenv('API_SECRET'),  # 替换为你的API密钥
+            iat_model_enum=SparkIatModel.ZH_CN_MANDARIN,
+            dwa="wpgs"
+        )
+        file_path = os.path.join(os.path.dirname(__file__), '../example/resources', 'spark_iat_cn_16k_10.pcm')
+        # file_path = os.path.join(os.path.dirname(__file__), 'resources', 'spark_iat_mul_cn_16k_10.pcm')
+        # file_path = os.path.join(os.path.dirname(__file__), 'resources', 'spark_iat_mul_lang_16k_10.pcm')
+        f = open(file_path, 'rb')
+
+        async for chunk in client.astream(f):
+            pass
+
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
-

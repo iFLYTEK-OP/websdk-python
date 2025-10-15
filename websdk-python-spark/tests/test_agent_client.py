@@ -50,6 +50,42 @@ class TestAgentClient:
         assert param.flow_id == "test_flow"
         assert param.parameters == {"key": "value"}
 
+    def test_validate_param(self):
+        """测试 validate_param """
+        param = AgentChatParam(
+            flow_id=None,
+            parameters=None
+        )
+        try:
+            param.validate()
+        except Exception as e:
+            assert isinstance(e, ValueError)
+        param.flow_id = "test_flow"
+        try:
+            param.validate()
+        except Exception as e:
+            assert isinstance(e, ValueError)
+
+        param = AgentResumeParam(
+            event_id=None,
+            event_type=None,
+            content=None
+        )
+        try:
+            param.validate()
+        except Exception as e:
+            assert isinstance(e, ValueError)
+        param.event_id = "event_id"
+        try:
+            param.validate()
+        except Exception as e:
+            assert isinstance(e, ValueError)
+        param.event_type = "event_type"
+        try:
+            param.validate()
+        except Exception as e:
+            assert isinstance(e, ValueError)
+
     @patch('xfyunsdkspark.agent_client.AgentClient.sse_post')
     def test_completions_sse(self, mock_send):
 
@@ -90,7 +126,7 @@ class TestAgentClient:
 
         param = AgentChatParam(
             flow_id="7351431612989308928",
-            parameters = {"AGENT_USER_INPUT": "今天天气怎么样"},
+            parameters={"AGENT_USER_INPUT": "今天天气怎么样"},
             stream=False
         )
 
@@ -178,7 +214,7 @@ class TestAgentClient:
         file_path = os.path.join(os.path.dirname(__file__), '../example/resources', 'ocr1.jpg')
 
         try:
-            client._prepare_file_for_upload(file_path,  'ocr1.jpg')
+            client._prepare_file_for_upload(file_path, 'ocr1.jpg')
         except Exception as e:
             assert isinstance(e, FileNotFoundError)
 

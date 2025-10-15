@@ -55,7 +55,7 @@ title = websdk-python-nlp Coverage Report
 
 [xml]
 # XML 报告输出
-output = coverage.xml
+output = coverage-nlp.xml
 
 [paths]
 source =

@@ -52,7 +52,7 @@ title = websdk-python-spark Coverage Report
 
 [xml]
 # XML 报告输出
-output = coverage.xml
+output = coverage-spark.xml
 
 [paths]
 source =

@@ -5,13 +5,16 @@ relative_files = True
 # 源代码目录
 source = xfyunsdkocr
 
-# 需要测量覆盖率的文件
+# 省略不需要测试的文件或目录
 omit =
     */tests/*
     */test_*.py
     */__pycache__/*
     */site-packages/*
-    setup.py
+    */setup.py
+    */example/*
+    */build/*
+    */dist/*
 
 # 分支覆盖率
 branch = True
@@ -52,7 +55,7 @@ title = websdk-python-ocr Coverage Report
 
 [xml]
 # XML 报告输出
-output = coverage.xml
+output = coverage-ocr.xml
 
 [paths]
 source =

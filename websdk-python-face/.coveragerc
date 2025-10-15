@@ -16,32 +16,46 @@ omit =
     */build/*
     */dist/*
 
+# 分支覆盖率
+branch = True
+
 [report]
+# 忽略错误
+ignore_errors = False
+
+# 精度
+precision = 2
+
+# 显示缺失行
+show_missing = True
+
+# 调过覆盖的文件
+skip_covered = False
+
 # 报告中排除的行（如永远不会执行的代码）
 exclude_lines =
     # 标准排除规则
     pragma: no cover
     def __repr__
+    def __str__
     raise AssertionError
     raise NotImplementedError
     if __name__ == .__main__.:
     if TYPE_CHECKING:
     @abstractmethod
     @abc.abstractmethod
-
-# 显示缺少覆盖的行号
-show_missing = True
-
-# 精度
-precision = 2
+    pass
 
 [html]
 # HTML 报告输出目录
 directory = htmlcov
 
+# 标题
+title = websdk-python-face Coverage Report
+
 [xml]
 # XML 报告输出文件
-output = coverage.xml
+output = coverage-face.xml
 
 [paths]
 source =
