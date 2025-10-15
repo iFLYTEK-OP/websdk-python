@@ -25,7 +25,8 @@ def stream():
             app_id=os.getenv('APP_ID'),  # 替换为你的应用ID
             api_key=os.getenv('API_KEY'),  # 替换为你的API密钥
             api_secret=os.getenv('API_SECRET'),  # 替换为你的API密钥
-            dwa="wpgs"
+            # dwa="wpgs",
+            vinfo=1
         )
         file_path = os.path.join(os.path.dirname(__file__), 'resources/iat', 'iat_pcm_16k.pcm')
         f = open(file_path, 'rb')

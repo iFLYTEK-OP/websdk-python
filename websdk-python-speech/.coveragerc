@@ -3,7 +3,7 @@
 relative_files = True
 
 # 源代码目录
-source = xfyunsdkspark
+source = xfyunsdkspeech
 
 # 省略不需要测试的文件或目录
 omit =
@@ -51,14 +51,14 @@ exclude_lines =
 directory = htmlcov
 
 # 标题
-title = websdk-python-spark Coverage Report
+title = websdk-python-speech Coverage Report
 
 [xml]
 # XML 报告输出
-output = coverage-spark.xml
+output = coverage-speech.xml
 
 [paths]
 source =
-    xfyunsdkspark/
-    */xfyunsdkspark/
+    xfyunsdkspeech/
+    */xfyunsdkspeech/
 

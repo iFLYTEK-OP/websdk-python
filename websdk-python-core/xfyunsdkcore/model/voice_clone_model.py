@@ -35,7 +35,11 @@ class ResponseData:
         audio_data = data.get('audio', {})
         pybuf_data = data.get('pybuf', {})
 
+        if isinstance(audio_data, dict):
+            audio_data = AudioInfo(**audio_data)
+        if isinstance(pybuf_data, dict):
+            pybuf_data = PybufInfo(**pybuf_data)
         return cls(
-            audio=AudioInfo(**audio_data) if audio_data else None,
-            pybuf=PybufInfo(**pybuf_data) if pybuf_data else None
+            audio=audio_data if audio_data else None,
+            pybuf=pybuf_data if pybuf_data else None
         )

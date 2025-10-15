@@ -30,24 +30,25 @@ def main():
 
     try:
         # 1. 上传文件
-        logger.info("上传文件...")
-        # 参数准备
-        file_path = os.path.join(os.path.dirname(__file__), 'resources/lfasr', 'lfasr_涉政.wav')
-        param = UploadParam(
-            audioMode="fileStream",
-            fileName="lfasr_涉政.wav",
-            fileSize=os.path.getsize(file_path),
-        )
-        upload_resp = client.upload(param.to_dict(), file_path)  # 使用默认训练文本
-        upload_data = json.loads(upload_resp)
-        if upload_data["code"] != "000000":
-            logger.error(f"查询失败: {upload_data}")
-            return
-        logger.info(f"上传文件返回结果: {upload_data}")
-
-        orderId = upload_data["content"]["orderId"]
+        # logger.info("上传文件...")
+        # # 参数准备
+        # file_path = os.path.join(os.path.dirname(__file__), 'resources/lfasr', 'lfasr_涉政.wav')
+        # param = UploadParam(
+        #     audioMode="fileStream",
+        #     fileName="lfasr_涉政.wav",
+        #     fileSize=os.path.getsize(file_path),
+        # )
+        # upload_resp = client.upload(param.to_dict(), file_path)  # 使用默认训练文本
+        # upload_data = json.loads(upload_resp)
+        # if upload_data["code"] != "000000":
+        #     logger.error(f"查询失败: {upload_data}")
+        #     return
+        # logger.info(f"上传文件返回结果: {upload_data}")
+        #
+        # orderId = upload_data["content"]["orderId"]
         # 2. 查询结果
         logger.info("查询结果...")
+        orderId = 'DKHJQ20250917175816508IMIK1azYB4UFjzI5'
         status = 3
         # 建议使用回调的方式查询结果，查询接口有请求频率限制
         while status == 3:
