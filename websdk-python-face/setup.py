@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="xfyunsdkface",
-    version="0.0.2",
+    version="0.0.3",
     description="a sdk face detector for xfyun",
     author="zyding6",
     author_email="zyding6@iflytek.com",
@@ -11,7 +11,7 @@ setup(
     packages=find_packages(include=["xfyunsdkface", "xfyunsdkface.*"]),
     python_requires=">=3.7.1",
     install_requires=[
-        "xfyunsdkcore>=0.0.2",
+        "xfyunsdkcore>=0.0.3",
         "python-dotenv"
     ],
 )

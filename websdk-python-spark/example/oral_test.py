@@ -48,7 +48,8 @@ def stream():
             api_key=os.getenv('API_KEY'),  # 替换为你的API密钥
             api_secret=os.getenv('API_SECRET'),  # 替换为你的API密钥
             encoding="raw",
-            sample_rate=16000
+            sample_rate=16000,
+            vcn='x5_lingfeiyi_flow'
         )
 
         # 准备存储所有音频数据

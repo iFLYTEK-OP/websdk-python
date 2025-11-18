@@ -24,13 +24,18 @@ class LFasrEnum(Enum):
 def param_check(param, file):
     if param is None:
         raise LFasrError("参数不能为空")
-    elif param["fileName"] is None or param["fileSize"] is None:
-        raise LFasrError(f"位置的audioMode参数: {param['audioMode']}")
-    elif param["audioMode"] not in ["fileStream", "urlLink"]:
-        raise LFasrError(f"位置的audioMode参数: {param['audioMode']}")
-    elif param["audioMode"] == "fileStream" and file is None:
+
+    if "fileName" not in param or "fileSize" not in param or "audioMode" not in param:
+        raise LFasrError("fileName和fileSize和audioMode参数不能为空")
+
+    audio_mode = param.get("audioMode")
+    if audio_mode and audio_mode not in ["fileStream", "urlLink"]:
+        raise LFasrError(f"不支持的audioMode参数: {audio_mode}")
+
+    if audio_mode == "fileStream" and file is None:
         raise LFasrError("audioMode为fileStream时，文件不能为空")
-    elif param["audioMode"] == "urlLink" and param["audioUrl"] is None:
+
+    if audio_mode == "urlLink" and not param.get("audioUrl"):
         raise LFasrError("audioMode为urlLink时，audioUrl不能为空")
 
 
@@ -51,7 +56,7 @@ class LFasrClient(HttpClient):
                          max_retries,
                          retry_interval)
 
-    def send(self, lf_asr_enum, param: Dict, file=None):
+    def __send(self, lf_asr_enum, param: Dict, file=None):
         # 构建请求参数
         timestamp = str(int(time.time()))
         signature = Signature.get_signature(self.app_id, timestamp, self.api_key)
@@ -86,13 +91,13 @@ class LFasrClient(HttpClient):
 
         if param["audioMode"] == "fileStream":
             with open(file_path, "rb") as f:
-                return self.send(LFasrEnum.UPLOAD, param, f.read(param["fileSize"]))
+                return self.__send(LFasrEnum.UPLOAD, param, f.read(param["fileSize"]))
         else:
-            return self.send(LFasrEnum.UPLOAD, param)
+            return self.__send(LFasrEnum.UPLOAD, param)
 
     def get_result(self, param: Dict):
         if param is None:
             raise LFasrError("参数不能为空")
-        elif param["orderId"] is None:
+        elif "orderId" not in param or param["orderId"] is None:
             raise LFasrError("转写订单号不能为空")
-        return self.send(LFasrEnum.GET_RESULT, param, False)
+        return self.__send(LFasrEnum.GET_RESULT, param, False)

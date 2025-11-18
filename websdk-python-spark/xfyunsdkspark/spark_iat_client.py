@@ -12,6 +12,7 @@ import websocket
 from xfyunsdkcore.log.logger import logger
 from xfyunsdkcore.signature import Signature
 from xfyunsdkcore.errors import SparkIatError
+from xfyunsdkcore.utils import JsonUtils
 
 # WebSocket API URLs
 CN_LANGUAGE_API = "wss://iat.xf-yun.com/v1"
@@ -418,6 +419,7 @@ class SparkIatClient:
                     }
                 }
             })
+        param = JsonUtils.remove_none_values(param)
         logger.debug(f"SparkIat Request Parameters: {param}")
         return param
 

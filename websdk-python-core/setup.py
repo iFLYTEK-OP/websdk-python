@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="xfyunsdkcore",
-    version="0.0.2",
+    version="0.0.3",
     description="a sdk core for xfyun",
     author="zyding6",
     author_email="zyding6@iflytek.com",

@@ -18,6 +18,7 @@ from xfyunsdkcore.model.voice_clone_model import (
     PybufInfo,
     ResponseData)
 from xfyunsdkcore.errors import VoiceCloneError
+from xfyunsdkcore.utils import JsonUtils
 
 
 class BaseConfig:
@@ -64,8 +65,8 @@ class _VoiceCloneClient:
         self.api_key = api_key
         self.api_secret = api_secret
         self.queue: Queue[Dict] = Queue()
-        self.blocking_audio: AudioInfo = {}
-        self.blocking_pybuf: PybufInfo = {"text": ""}
+        self.blocking_audio: Dict = {}
+        self.blocking_pybuf: Dict = {}
         self.client = websocket
         self.text_encoding = text_encoding
         self.byte = bytearray()
@@ -178,8 +179,10 @@ class _VoiceCloneClient:
         """Process blocking mode payload"""
         if audio_info["status"] == 2:
             self._initialize_blocking_data(audio_info, pybuf)
-        if pybuf:
-            self.blocking_pybuf["text"] += pybuf.get("text", "")
+        if pybuf and pybuf.get("text"):
+            chunk_text = base64.b64decode(pybuf.get("text")).decode(self.text_encoding)
+            pybuf_text = self.blocking_pybuf.get("text", "") + chunk_text
+            self.blocking_pybuf.update({"text": pybuf_text})
         if audio:
             self.byte.extend(base64.b64decode(audio))
 
@@ -187,11 +190,6 @@ class _VoiceCloneClient:
         """Handle final status message"""
         if not ws.streaming:
             self.blocking_audio.update({"audio": bytes(self.byte)})
-            if pybuf:
-                final_text = self.blocking_pybuf["text"]
-                if final_text:
-                    decoded_str = base64.b64decode(final_text).decode(self.text_encoding)
-                    self.blocking_pybuf.update({"text": decoded_str})
             blocking_final = {"audio": self.blocking_audio, "pybuf": self.blocking_pybuf}
             self.queue.put({"data": blocking_final})
         self.queue.put({"done": True})
@@ -216,7 +214,7 @@ class _VoiceCloneClient:
             "type": audio_info.get("type")
         })
         if pybuf:
-            self.blocking_pybuf["type"] = pybuf.get("type")
+            self.blocking_pybuf.update({"type": pybuf.get("type")})
 
     def on_error(self, ws: websocket.WebSocketApp, error: Any) -> None:
         """Handle WebSocket errors"""
@@ -338,6 +336,7 @@ class VoiceCloneClient:
             encoding: str = "lame",
             sample_rate: int = BaseConfig.DEFAULT_SAMPLE_RATE,
             vcn: str = "x5_clone",
+            style: Optional[str] = None,
             status: int = 2,
             request_timeout: int = BaseConfig.DEFAULT_TIMEOUT,
             callback: Optional[VoiceCloneCallback] = None):
@@ -364,6 +363,7 @@ class VoiceCloneClient:
             encoding: Audio encoding
             sample_rate: Sample rate
             vcn: Voice clone name
+            style: Voice clone style
             status: Status code
             request_timeout: Request timeout in seconds
             callback: Optional callback for audio chunks
@@ -388,6 +388,7 @@ class VoiceCloneClient:
         self.encoding = encoding
         self.sample_rate = sample_rate
         self.vcn = vcn
+        self.style = style
         self.status = status
         self.request_timeout = request_timeout
         self.callback = callback
@@ -426,6 +427,7 @@ class VoiceCloneClient:
                         "reg": self.reg,
                         "rdn": self.rdn,
                         "LanguageID": self.language_id,
+                        "style": self.style,
                         "audio": {
                             "encoding": self.encoding,
                             "sample_rate": self.sample_rate,
@@ -443,14 +445,14 @@ class VoiceCloneClient:
                     }
                 }
             }
-
+            param = JsonUtils.remove_none_values(param)
             logger.debug(f"Voice Clone Request Parameters: {param}")
             return param
         except Exception as e:
             logger.error(f"Failed to build parameters: {str(e)}")
             raise VoiceCloneError(f"Failed to build parameters: {str(e)}")
 
-    def generate(self, text: str) -> Generator[ResponseData, None, None]:
+    def generate(self, text: str) -> ResponseData:
         """Synchronously generate complete audio
 
         Args:

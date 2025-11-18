@@ -21,21 +21,18 @@ except ImportError:
 load_dotenv()
 
 
-def process_response(message: str, player):
+def process_response(response: dict, player):
     """
     处理来自 WebSocket 的响应消息
 
     Args:
-        message (str): 从 WebSocket 接收到的 UTF-8 编码的消息字符串
+        response (dict): 从 WebSocket 接收到的 UTF-8 编码的消息字符串
         player: 音频播放器对象，需实现 play(audio_data: bytes) 方法
 
     Returns:
         None
     """
     try:
-        # 解析 JSON 响应
-        response = json.loads(message)
-
         # 检查响应状态码
         code = response.get("header", {}).get("code", -1)
         if code != 0:
@@ -98,6 +95,7 @@ def generate():
             app_id=os.getenv('APP_ID'),  # 替换为你的应用ID
             api_key=os.getenv('API_KEY'),  # 替换为你的API密钥
             api_secret=os.getenv('API_SECRET'),  # 替换为你的API密钥
+
         )
 
         # 超拟人服务启动

@@ -405,6 +405,16 @@ class LlmOcrError(Exception):
         logger.error(f"LlmOcrError occurred: {message} (Error Code: {error_code})")
 
 
+class AiUiKnowledgeError(Exception):
+    """Custom exception for aiui knowledge client related errors"""
+
+    def __init__(self, message: str, error_code: int = -1):
+        self.message = message
+        self.error_code = error_code
+        super().__init__(f"AiUiKnowledgeError: {message} (Error Code: {error_code})")
+        logger.error(f"AiUiKnowledgeError occurred: {message} (Error Code: {error_code})")
+
+
 class SignatureError(Exception):
     """Custom exception for Voice Clone related errors"""
 
