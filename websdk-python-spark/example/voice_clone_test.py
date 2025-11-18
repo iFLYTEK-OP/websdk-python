@@ -57,7 +57,9 @@ def generate():
             api_secret=os.getenv('API_SECRET'),  # 替换为你的API密钥
             res_id="您的声纹ID",
             # callback=PrintCallback(),  # 使用回调处理音频块
-            rhy=1
+            rhy=1,
+            vcn='x5_clone',
+            # style='sichuan',
         )
 
         # 生成音频
@@ -92,7 +94,8 @@ def stream():
             api_secret=os.getenv('API_SECRET'),  # 替换为你的API密钥
             res_id="您的声纹ID",
             # callback=PrintCallback(),  # 使用回调处理音频块
-            rhy=1
+            rhy=1,
+            vcn='x5_clone',
         )
 
         # 准备存储所有音频数据
@@ -100,7 +103,7 @@ def stream():
         pybuf_text = ''
 
         # 流式生成音频
-        text = "全民制作人大家好，我是练习时长两年半的个人练习生蔡徐坤。喜欢唱、跳、rap、篮球"
+        text = "一句话复刻可以通过声纹训练合成对应的音频信息"
         logger.info(f"开始流式生成音频，文本长度: {len(text)}")
 
         for chunk in client.stream(text):

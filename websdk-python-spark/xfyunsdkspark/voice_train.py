@@ -13,6 +13,7 @@ from xfyunsdkcore.http_client import HttpClient
 from xfyunsdkcore.signature import VoiceCloneSignature
 from enum import Enum
 from xfyunsdkcore.log.logger import logger
+from xfyunsdkcore.utils import JsonUtils
 
 
 class VoiceTrainEnum(Enum):
@@ -52,15 +53,16 @@ class AudioAddRequest:
 
 @dataclass
 class CreateTaskRequest:
-    taskName: str
-    sex: int
-    ageGroup: int
-    language: str
-    resourceName: str
+    taskName: Optional[str] = None
+    sex: Optional[int] = None
+    ageGroup: Optional[int] = None
+    resourceName: Optional[str] = None
+    language: Optional[str] = None
     resourceType: int = 12
     denoiseSwitch: Optional[int] = None
     mosRatio: Optional[float] = None
     thirdUser: Optional[str] = None
+    engineVersion: Optional[str] = None
     callbackUrl: Optional[str] = None
 
 
@@ -98,12 +100,12 @@ class VoiceTrainClient(HttpClient):
 
     def create_task(self, request: CreateTaskRequest, async_mode: bool = False) -> str:
         self._token_check(request)
-        return self._post(VoiceTrainEnum.TASK_ADD, async_mode, request.__dict__)
+        return self._post(VoiceTrainEnum.TASK_ADD, async_mode, JsonUtils.remove_none_values(request.__dict__))
 
     def audio_add(self, request: AudioAddRequest, async_mode: bool = False) -> str:
         self._token_check(request)
         request.validate_url()
-        return self._post(VoiceTrainEnum.AUDIO_ADD, async_mode, request.__dict__)
+        return self._post(VoiceTrainEnum.AUDIO_ADD, async_mode, JsonUtils.remove_none_values(request.__dict__))
 
     def submit(self, task_id: str, async_mode: bool = False) -> str:
         self._token_check(task_id)

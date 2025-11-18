@@ -10,6 +10,7 @@ import websocket
 from xfyunsdkcore.log.logger import logger
 from xfyunsdkcore.signature import Signature
 from xfyunsdkcore.errors import IseError
+from xfyunsdkcore.utils import JsonUtils
 
 HOST_URL = "wss://ise-api.xfyun.cn/v2/open-ise"
 DEFAULT_TIMEOUT = 30
@@ -294,6 +295,7 @@ class IseClient:
             },
             "data": {"data": None, "status": 0}
         }
+        param = JsonUtils.remove_none_values(param)
         logger.debug(f"Ise Request Parameters: {param}")
         return param
 

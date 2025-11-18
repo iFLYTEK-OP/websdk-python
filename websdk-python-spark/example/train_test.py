@@ -29,26 +29,27 @@ def main():
 
     try:
         # 1. 获取训练文本
-        # logger.info("获取训练文本...")
-        # text_response = client.train_text(text_id=5001, async_mode=False)  # 使用默认训练文本
-        # text_data = json.loads(text_response)
-        # logger.info(f"训练文本: {text_data}")
+        logger.info("获取训练文本...")
+        text_response = client.train_text(text_id=5001, async_mode=False)  # 使用默认训练文本
+        text_data = json.loads(text_response)
+        logger.info(f"训练文本: {text_data}")
 
         # 2. 创建训练任务
-        logger.info("创建训练任务...")
-        create_request = CreateTaskRequest(
-            taskName="task-03",
-            sex=2,  # 1: 男声, 2: 女声
-            ageGroup=2,  # 1: 儿童, 2: 青年, 3: 中年, 4: 老年
-            language="cn",  # 中文
-            resourceName="中文女发音人",
-        )
-        task_response = client.create_task(create_request)
-        task_data = json.loads(task_response)
-        task_id = task_data.get("data")
-        if not task_id:
-            raise ValueError(f"Failed to create task: {task_response}")
-        logger.info(f"任务创建成功, task_id: {task_id}")
+        # logger.info("创建训练任务...")
+        # create_request = CreateTaskRequest(
+        #     taskName="task-normal-01",
+        #     sex=2,  # 1: 男声, 2: 女声
+        #     ageGroup=2,  # 1: 儿童, 2: 青年, 3: 中年, 4: 老年
+        #     language="cn",  # 中文
+        #     resourceName="中文女发音人",
+        #     # engineVersion="omni_v1"
+        # )
+        # task_response = client.create_task(create_request)
+        # task_data = json.loads(task_response)
+        # task_id = task_data.get("data")
+        # if not task_id:
+        #     raise ValueError(f"Failed to create task: {task_response}")
+        # logger.info(f"任务创建成功, task_id: {task_id}")
 
         # 3. 添加音频到任务
         # logger.info("添加音频到任务...")
@@ -69,36 +70,36 @@ def main():
         # logger.info(f"任务提交结果: {submit_data}")
 
         # 5. 提交文件任务(不需要单独调用submit接口)
-        file_path = os.path.join(os.path.dirname(__file__), 'resources', 'train.mp3')
-        local_audio_request = AudioAddRequest(
-            taskId=task_id,
-            textId=5001,
-            textSegId=1,
-            files=file_path
-        )
-        submit_with_audio_response = client.submit_with_audio(local_audio_request)
-        logger.info(f"Submit with audio response: {submit_with_audio_response}")
+        # file_path = os.path.join(os.path.dirname(__file__), 'resources', 'train.mp3')
+        # local_audio_request = AudioAddRequest(
+        #     taskId=task_id,
+        #     textId=5001,
+        #     textSegId=1,
+        #     files=file_path
+        # )
+        # submit_with_audio_response = client.submit_with_audio(local_audio_request)
+        # logger.info(f"Submit with audio response: {submit_with_audio_response}")
 
         # 6. 轮询获取训练结果
-        while True:
-            result_response = client.result(task_id)
-            result_data = json.loads(result_response)
-            status = result_data.get("data", {}).get("trainStatus")
-
-            if status == -1:
-                logger.info("一句话复刻训练中...")
-            elif status == 0:
-                message = result_data.get("data", {}).get("failedDesc")
-                logger.error(f"一句话复刻训练失败: {message}")
-                break
-            elif status == 2:
-                logger.warning(f"一句话复刻训练任务未提交: {result_response}")
-                break
-            elif status == 1:
-                resId = result_data.get("data", {}).get("assetId")
-                logger.info(f"一句话复刻训练完成, 声纹ID: {resId}")
-                break
-            time.sleep(3)
+        # while True:
+        #     result_response = client.result(task_id)
+        #     result_data = json.loads(result_response)
+        #     status = result_data.get("data", {}).get("trainStatus")
+        #
+        #     if status == -1:
+        #         logger.info("一句话复刻训练中...")
+        #     elif status == 0:
+        #         message = result_data.get("data", {}).get("failedDesc")
+        #         logger.error(f"一句话复刻训练失败: {message}")
+        #         break
+        #     elif status == 2:
+        #         logger.warning(f"一句话复刻训练任务未提交: {result_response}")
+        #         break
+        #     elif status == 1:
+        #         resId = result_data.get("data", {}).get("assetId")
+        #         logger.info(f"一句话复刻训练完成, 声纹ID: {resId}")
+        #         break
+        #     time.sleep(3)
     except Exception as e:
         logger.error(f"发生错误: {str(e)}")
         raise

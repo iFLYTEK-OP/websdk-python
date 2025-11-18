@@ -11,6 +11,7 @@ import websocket
 from xfyunsdkcore.log.logger import logger
 from xfyunsdkcore.signature import Signature
 from xfyunsdkcore.errors import IatError
+from xfyunsdkcore.utils import JsonUtils
 
 # WebSocket API URLs
 CH_EN_LANGUAGE = "wss://iat-api.xfyun.cn/v2/iat"
@@ -343,6 +344,7 @@ class IatClient:
                 "audio": "",
             }
         }
+        param = JsonUtils.remove_none_values(param)
         logger.debug(f"Iat Clone Request Parameters: {param}")
         return param
 
