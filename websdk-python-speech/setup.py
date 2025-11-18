@@ -11,7 +11,7 @@ setup(
     packages=find_packages(include=["xfyunsdkspeech", "xfyunsdkspeech.*"]),
     python_requires=">=3.7.1",
     install_requires=[
-        "xfyunsdkcore>=0.0.2",
+        "xfyunsdkcore>=0.0.3",
         "python-dotenv"
     ],
     extras_require={
