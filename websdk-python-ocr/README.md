@@ -25,7 +25,7 @@ pip install xfyunsdkocr
 
 ## 依赖说明
 
-- xfyunsdkcore>=0.1.0: 核心SDK依赖
+- xfyunsdkcore>=0.0.3: 核心SDK依赖
 - python-dotenv: 环境变量管理
 
 ## 快速开始
