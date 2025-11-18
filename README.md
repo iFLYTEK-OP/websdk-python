@@ -1,6 +1,6 @@
 # 讯飞开放平台AI能力-PYTHONSDK
 
-[![Build Status](https://www.travis-ci.com/iFLYTEK-OP/websdk-java.svg?branch=feature-ci)](https://www.travis-ci.com/iFLYTEK-OP/websdk-java)[![codecov](https://codecov.io/gh/iFLYTEK-OP/websdk-java/branch/feature-ci/graph/badge.svg?token=KQRe0Igv9b)](https://codecov.io/gh/iFLYTEK-OP/websdk-java)
+[![codecov](https://codecov.io/github/iFLYTEK-OP/websdk-python/branch/feature_0.1.0/graph/badge.svg?token=30e0q8SNgu)](https://codecov.io/github/iFLYTEK-OP/websdk-python)
 
 提供各种讯飞开放平台能力的PYTHONSDK。
 
